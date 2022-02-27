@@ -16,7 +16,7 @@ public class Bullet2d : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) 
     {
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        effect.transform.SetParent(canvas.transform);
+        // effect.transform.SetParent(canvas.transform);
 
         // other.transform.GetComponent<SpiderMovemant2d>().GetHit();
 

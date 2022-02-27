@@ -38,9 +38,25 @@ public class ArcherController : MonoBehaviour
         // animator.SetFloat("horizontal", movement.x);
         // animator.SetFloat("vertical", movement.y);
         // animator.SetFloat("magnetuda", movement.magnitude);
-
-        animator.SetFloat("horizontal", aim.x);
-        animator.SetFloat("vertical", aim.y);
+        Vector2 go = new Vector2(0, 0);
+        if(Input.GetKey(KeyCode.S))
+        {
+            go.y = -3;
+        }
+        if(Input.GetKey(KeyCode.W))
+        {
+            go.y = 3;
+        }
+        if(Input.GetKey(KeyCode.A))
+        {
+            go.x = -3;
+        }
+        if(Input.GetKey(KeyCode.D))
+        {
+            go.x = 3;
+        }
+        animator.SetFloat("horizontal", aim.x + go.x);
+        animator.SetFloat("vertical", aim.y + go.y);
         animator.SetFloat("magnetuda", aim.magnitude);
 
         
