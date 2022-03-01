@@ -38,34 +38,50 @@ public class ArcherController : MonoBehaviour
         // animator.SetFloat("horizontal", movement.x);
         // animator.SetFloat("vertical", movement.y);
         // animator.SetFloat("magnetuda", movement.magnitude);
-        Vector2 go = new Vector2(0, 0);
-        if(Input.GetKey(KeyCode.S))
-        {
-            go.y = -3;
-        }
-        if(Input.GetKey(KeyCode.W))
-        {
-            go.y = 3;
-        }
-        if(Input.GetKey(KeyCode.A))
-        {
-            go.x = -3;
-        }
-        if(Input.GetKey(KeyCode.D))
-        {
-            go.x = 3;
-        }
-        animator.SetFloat("horizontal", aim.x + go.x);
-        animator.SetFloat("vertical", aim.y + go.y);
+        // Vector2 go = new Vector2(0, 0);
+        // if(Input.GetKey(KeyCode.S))
+        // {
+        //     go.y = -3;
+        // }
+        // if(Input.GetKey(KeyCode.W))
+        // {
+        //     go.y = 3;
+        // }
+        // if(Input.GetKey(KeyCode.A))
+        // {
+        //     go.x = -3;
+        // }
+        // if(Input.GetKey(KeyCode.D))
+        // {
+        //     go.x = 3;
+        // }
+        animator.SetFloat("horizontal", aim.x );
+        animator.SetFloat("vertical", aim.y );
         animator.SetFloat("magnetuda", aim.magnitude);
 
-        
+        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 6;
     }
-
     private void Movemant()
     {
-        Vector3 movement = new Vector3(Input.GetAxisRaw("Horizontal") ,Input.GetAxisRaw("Vertical"), 0.0f); 
+        float axisX = Input.GetAxisRaw("Horizontal");
+        float axisY = Input.GetAxisRaw("Vertical");
+
+        Vector3 movement = new Vector3(axisX ,axisY, 0.0f); 
         transform.position = transform.position + movement * speed * Time.deltaTime;
+        
+        float a = 0;
+        if(axisX > 0 || axisY > 0)
+        {
+            a = 1;
+        }
+
+        if(axisX < 0 || axisY < 0)
+        {
+            a = -1;
+        }
+        
+
+        animator.SetFloat("isgo", a);
     }
 
     private void MoveCrossHair()
