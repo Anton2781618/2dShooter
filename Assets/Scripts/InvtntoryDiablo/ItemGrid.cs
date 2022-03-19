@@ -84,7 +84,7 @@ public class ItemGrid : MonoBehaviour
             return false;
         }
 
-        if (OverLapTheck(posX, posY, inventoryItem.WIDTH, inventoryItem.HEIGHT, ref overlapItem) == false)
+        if (OverLapCheck(posX, posY, inventoryItem.WIDTH, inventoryItem.HEIGHT, ref overlapItem) == false)
         {
             overlapItem = null;
             return false;
@@ -143,7 +143,7 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    private bool OverLapTheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem)
+    private bool OverLapCheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem)
     {
         for (int x = 0; x < width; x++)
         {
