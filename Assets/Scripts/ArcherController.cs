@@ -10,6 +10,9 @@ public class ArcherController : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Transform crossHair;
     [SerializeField] private GameObject buletPrefab;
+    [SerializeField] private Rigidbody2D weapon;
+    [SerializeField] private Transform mizzlePos;
+
 
     private Camera cam;
     private Vector2 mouseWorldPosition;
@@ -35,26 +38,7 @@ public class ArcherController : MonoBehaviour
     {
         
         Vector2 aim = (crossHair.transform.position - transform.position).normalized;
-        // animator.SetFloat("horizontal", movement.x);
-        // animator.SetFloat("vertical", movement.y);
-        // animator.SetFloat("magnetuda", movement.magnitude);
-        // Vector2 go = new Vector2(0, 0);
-        // if(Input.GetKey(KeyCode.S))
-        // {
-        //     go.y = -3;
-        // }
-        // if(Input.GetKey(KeyCode.W))
-        // {
-        //     go.y = 3;
-        // }
-        // if(Input.GetKey(KeyCode.A))
-        // {
-        //     go.x = -3;
-        // }
-        // if(Input.GetKey(KeyCode.D))
-        // {
-        //     go.x = 3;
-        // }
+       
         animator.SetFloat("horizontal", aim.x );
         animator.SetFloat("vertical", aim.y );
         animator.SetFloat("magnetuda", aim.magnitude);
@@ -63,6 +47,7 @@ public class ArcherController : MonoBehaviour
     }
     private void Movemant()
     {
+        Vector2 aimCopi = (crossHair.transform.position - transform.position).normalized;
         float axisX = Input.GetAxisRaw("Horizontal");
         float axisY = Input.GetAxisRaw("Vertical");
 
@@ -70,16 +55,25 @@ public class ArcherController : MonoBehaviour
         transform.position = transform.position + movement * speed * Time.deltaTime;
         
         float a = 0;
-        if(axisX > 0 || axisY > 0)
+        if(axisX > 0 && aimCopi.x > 0 || axisY > 0 )
         {
             a = 1;
         }
-
-        if(axisX < 0 || axisY < 0)
+        else
+        if(axisX > 0 && aimCopi.x < 0 || axisY < 0)
+        {
+            a = - 1;
+        }
+        else
+        if(axisX < 0 && aimCopi.x > 0 || axisY < 0)
         {
             a = -1;
         }
-        
+        else
+        if(axisX < 0 && aimCopi.x < 0 || axisY > 0)
+        {
+            a = 1;
+        }
 
         animator.SetFloat("isgo", a);
     }
@@ -88,6 +82,21 @@ public class ArcherController : MonoBehaviour
     {
         mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         crossHair.position = mouseWorldPosition;
+
+        weapon.transform.localPosition = Vector3.zero;
+
+        Vector2 looDir = (Vector2)crossHair.position - weapon.position;
+        float angle = Mathf.Atan2(looDir.y, looDir.x) * Mathf.Rad2Deg - 90f;
+        weapon.rotation = angle;
+
+        if(weapon.transform.rotation.eulerAngles.z < 180)
+        {
+            weapon.transform.localScale = new Vector3(1, weapon.transform.localScale.y, weapon.transform.localScale.z);
+        }
+        else
+        {
+            weapon.transform.localScale = new Vector3(-1, weapon.transform.localScale.y, weapon.transform.localScale.z);
+        }
     }
 
     private void Fire()
@@ -95,7 +104,7 @@ public class ArcherController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector2 heading = (crossHair.transform.position - transform.position).normalized;
-            var bullet = Instantiate(buletPrefab, transform.position, Quaternion.identity);
+            var bullet = Instantiate(buletPrefab, mizzlePos.position, Quaternion.identity);
 
             bullet.GetComponent<Rigidbody2D>().velocity = heading * bulletSpeed;
             bullet.transform.Rotate(0, 0, Mathf.Atan2(mouseWorldPosition.y, mouseWorldPosition.x) * Mathf.Rad2Deg);

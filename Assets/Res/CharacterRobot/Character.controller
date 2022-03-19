@@ -47,7 +47,7 @@ AnimatorStateMachine:
     m_Position: {x: 920, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1746666893004764325}
-    m_Position: {x: 570, y: 130, z: 0}
+    m_Position: {x: 570, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3206360300775003522}
     m_Position: {x: 920, y: 220, z: 0}
@@ -237,24 +237,6 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: aim
     m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: aimHorizontal
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: aimVertical
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: aimMagnitud
-    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
